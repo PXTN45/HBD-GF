@@ -9,7 +9,7 @@ function App() {
   const [isOpenVideo, setIsOpenVideo] = useState<boolean>(false);
   const [loading, setLoading] = useState(0);
   const [inputValue, setInputValue] = useState<string>("");
-  const correctPassword = "190747"; // รหัสผ่านที่ต้องการ
+  const correctPassword = "191047"; // รหัสผ่านที่ต้องการ
 
   const sectionRefs = useRef<(HTMLElement | null)[]>([]); // Ref สำหรับทุก section
   const [visibleSections, setVisibleSections] = useState<number[]>([]); // เก็บ section ที่มองเห็นได้
