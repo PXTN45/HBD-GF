@@ -8,10 +8,8 @@ function App() {
   const [isOpenPage, setIsOpenPage] = useState<boolean>(false);
   const [isOpenVideo, setIsOpenVideo] = useState<boolean>(false);
   const [loading, setLoading] = useState(0);
-
-  const OpenVideo = () => {
-    setIsOpenVideo(!isOpenVideo);
-  };
+  const [inputValue, setInputValue] = useState<string>("");
+  const correctPassword = "190747"; // รหัสผ่านที่ต้องการ
 
   const sectionRefs = useRef<(HTMLElement | null)[]>([]); // Ref สำหรับทุก section
   const [visibleSections, setVisibleSections] = useState<number[]>([]); // เก็บ section ที่มองเห็นได้
@@ -48,16 +46,98 @@ function App() {
 
       return () => clearInterval(timer); // ล้าง interval เมื่อ component ถูก unmounted
     } else {
-      // setStatus(true); 
-      setIsOpenPage(true)
+      // setStatus(true);
+      setIsOpenPage(true);
     }
   }, [loading]);
+
+  const openModal = (id: string) => {
+    const modal = document.getElementById(id) as HTMLDialogElement;
+    if (modal) {
+      modal.showModal();
+    }
+  };
+
+  const closeModal = () => {
+    const modal = document.getElementById("openVideo") as HTMLDialogElement;
+    if (modal) {
+      modal.close();
+    }
+  };
+
+  const handleNumberClick = (number: string) => {
+    if (inputValue.length < 6) {
+      // จำกัดจำนวนหลักที่ป้อน
+      setInputValue((prev) => prev + number);
+    }
+  };
+
+  const handleClear = () => {
+    setInputValue(""); // ล้างค่ารหัสผ่าน
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // ป้องกันการส่งฟอร์ม
+    if (inputValue === correctPassword) {
+      setIsOpenVideo(true); // ตั้งค่า isOpenVideo เป็น true
+      closeModal(); // ปิดโมดอล
+    } else {
+      alert("รหัสผ่านไม่ถูกต้อง"); // แจ้งเตือนหากรหัสผ่านไม่ถูกต้อง
+    }
+  };
 
   return (
     <>
       <div className=" w-screen h-full bg-white flex justify-center py-10 ">
+        <dialog id="openVideo" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">รหัสอะไรนะ ???</h3>
+            <p className="py-4">
+              <div className="flex flex-col items-center">
+                <div className="mb-4 border p-2 rounded text-lg">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    placeholder="ใส่รหัสผ่านสิจ๊ะ"
+                    className="input w-full max-w-xs"
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {/* ปุ่มกดตัวเลข */}
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+                    <button
+                      key={number}
+                      className="btn"
+                      onClick={() => handleNumberClick(number.toString())}
+                    >
+                      {number}
+                    </button>
+                  ))}
+                  <button className="btn" onClick={handleClear}>
+                    C
+                  </button>{" "}
+                  {/* ปุ่มล้าง */}
+                  <button
+                    className="btn"
+                    onClick={() => handleNumberClick("0")}
+                  >
+                    0
+                  </button>
+                  <button className="btn" onClick={handleSubmit}>
+                    Submit
+                  </button>{" "}
+                  {/* ปุ่มส่ง */}
+                </div>
+              </div>
+            </p>
+            <div className="modal-action">
+              <button className="btn" onClick={closeModal}>
+                Close
+              </button>
+            </div>
+          </div>
+        </dialog>
         <div className=" w-[430px] border shadow-lg rounded-lg">
-
           {!isOpenPage ? (
             <div
               className="h-screen bg-white flex justify-center items-center flex-col"
@@ -67,32 +147,30 @@ function App() {
                 <img src="../image/gift.gif" alt="" className="block" />
               </div>
               <div>
-            <div
-              style={{
-                width: "400px",
-                height: "50px",
-                backgroundColor: "light",
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: '20px', 
-              }}
-            >
-              <div
-                style={{
-                  height: "100%",
-                  width: `${loading}%`,
-                  backgroundColor: "pink",
-                  transition: "width 1s",
-                  borderRadius: '20px', 
-                }}
-              />
-            </div>
-            <div className="flex justify-center my-5">
-
-            <p className="text-pink-700 font-bold">Loading: {loading}%</p>
-            </div>
-
-          </div>
+                <div
+                  style={{
+                    width: "400px",
+                    height: "50px",
+                    backgroundColor: "light",
+                    position: "relative",
+                    overflow: "hidden",
+                    borderRadius: "20px",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${loading}%`,
+                      backgroundColor: "pink",
+                      transition: "width 1s",
+                      borderRadius: "20px",
+                    }}
+                  />
+                </div>
+                <div className="flex justify-center my-5">
+                  <p className="text-pink-700 font-bold">Loading: {loading}%</p>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="bg-white h-screen overflow-y-auto py-10">
@@ -132,7 +210,7 @@ function App() {
                 </div>
               ) : (
                 isOpenVideo === false && (
-                  <div className="p-5" onClick={OpenVideo}>
+                  <div className="p-5" onClick={() => openModal("openVideo")}>
                     <div className="border w-full rounded-lg h-[250px] p-5 shadow-lg flex flex-col justify-center items-center relative">
                       <TypingEffect text={messages} />
                       <img
