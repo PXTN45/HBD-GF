@@ -95,12 +95,9 @@ function App() {
             <p className="py-4">
               <div className="flex flex-col items-center">
                 <div className="mb-4 border p-2 rounded text-lg">
-                  <input
-                    type="text"
-                    value={inputValue}
-                    placeholder="ใส่รหัสผ่านสิจ๊ะ"
-                    className="input w-full max-w-xs"
-                  />
+                  <div className="w-[250px] h-10 flex justify-center items-center gap-5">
+                    {inputValue}
+                  </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   {/* ปุ่มกดตัวเลข */}
