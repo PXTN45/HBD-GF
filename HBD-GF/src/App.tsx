@@ -40,71 +40,75 @@ function App() {
       });
     };
   }, [visibleSections]);
-  const messages = ["เปิดเร็วๆสิ" , "มีของขวัญจะให้"];
+  const messages = ["เปิดเร็วๆสิ", "มีของขวัญจะให้"];
 
   return (
     <>
-      {!isOpenPage ? (
-        <div
-          className="h-screen bg-white flex justify-center items-center"
-          onClick={OpenPage}
-        >
-          <div className="relative inline-block">
-            <img src="../image/gift.gif" alt="" className="block" />
-          </div>
-        </div>
-      ) : (
-        <div className="bg-white h-screen overflow-y-auto py-10">
-          <div className="flex justify-center w-full items-center">
-            <div className="flex flex-col text-blue-500 font-bold gap-2">
-              <div>
-                <span className="text-7xl">สุขสันต์</span>
-              </div>
-              <div>
-                <span className="text-7xl">วันเกิด</span>
-              </div>
-              <div>
-                <span className="text-3xl">น้องไอซ์ ❤️🧊</span>
-              </div>
-            </div>
-          </div>
-          <div></div>
-          <div className="flex flex-row justify-center items-center w-full p-5">
-            <Pags1 />
-          </div>
-          <div>
-            <Description />
-          </div>
-          {isOpenVideo === true ? (
-            <div className="p-5">
-              {/* เพิ่มวิดีโอต่อจากข้อความ */}
-              <div className="mt-5">
-                <video
-                  className="rounded-lg"
-                  autoPlay
-                  controls
-                  src="../../image/img-gf/HBD.mp4"
-                >
-                  Your browser does not support the video tag.
-                </video>
+      <div className=" w-screen h-full bg-white flex justify-center py-10 ">
+        <div className=" w-[430px] border shadow-lg rounded-lg">
+          {!isOpenPage ? (
+            <div
+              className="h-screen bg-white flex justify-center items-center"
+              onClick={OpenPage}
+            >
+              <div className="relative inline-block">
+                <img src="../image/gift.gif" alt="" className="block" />
               </div>
             </div>
           ) : (
-            isOpenVideo === false && (
-              <div className="p-5" onClick={OpenVideo}>
-                <div className="border w-full rounded-lg h-[250px] p-5 shadow-lg flex flex-col justify-center items-center relative">
-                  <TypingEffect text={messages} />
-                  <img
-                    src="../image/valentines-day.gif"
-                    alt=""
-                    className="w-[100px] h-[100px]"
-                  />
+            <div className="bg-white h-screen overflow-y-auto py-10">
+              <div className="flex justify-center w-full items-center">
+                <div className="flex flex-col text-blue-500 font-bold gap-2">
+                  <div>
+                    <span className="text-7xl">สุขสันต์</span>
+                  </div>
+                  <div>
+                    <span className="text-7xl">วันเกิด</span>
+                  </div>
+                  <div>
+                    <span className="text-3xl">น้องไอซ์ ❤️🧊</span>
+                  </div>
                 </div>
               </div>
-            )
+              <div></div>
+              <div className="flex flex-row justify-center items-center w-full p-5">
+                <Pags1 />
+              </div>
+              <div>
+                <Description />
+              </div>
+              {isOpenVideo === true ? (
+                <div className="p-5">
+                  {/* เพิ่มวิดีโอต่อจากข้อความ */}
+                  <div className="mt-5">
+                    <video
+                      className="rounded-lg"
+                      autoPlay
+                      controls
+                      src="../../image/img-gf/HBD.mp4"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </div>
+              ) : (
+                isOpenVideo === false && (
+                  <div className="p-5" onClick={OpenVideo}>
+                    <div className="border w-full rounded-lg h-[250px] p-5 shadow-lg flex flex-col justify-center items-center relative">
+                      <TypingEffect text={messages} />
+                      <img
+                        src="../image/valentines-day.gif"
+                        alt=""
+                        className="w-[100px] h-[100px]"
+                      />
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
           )}
         </div>
-      )}
+      </div>
     </>
   );
 }
