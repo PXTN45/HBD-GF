@@ -7,6 +7,8 @@ import TypingEffect from "./component/TypingEffect ";
 function App() {
   const [isOpenPage, setIsOpenPage] = useState<boolean>(false);
   const [isOpenVideo, setIsOpenVideo] = useState<boolean>(false);
+  const [loading, setLoading] = useState(0);
+  const [status, setStatus] = useState(false);
   const OpenPage = () => {
     setIsOpenPage(!isOpenPage);
   };
@@ -41,19 +43,59 @@ function App() {
     };
   }, [visibleSections]);
   const messages = ["เปิดเร็วๆสิ", "มีของขวัญจะให้"];
+  useEffect(() => {
+    if (loading < 100) {
+      const timer = setInterval(() => {
+        setLoading((prev) => prev + 10); // เพิ่ม 10% ทุก ๆ 1000ms
+      }, 1000);
+
+      return () => clearInterval(timer); // ล้าง interval เมื่อ component ถูก unmounted
+    } else {
+      // setStatus(true); 
+      setIsOpenPage(true)
+    }
+  }, [loading]);
 
   return (
     <>
       <div className=" w-screen h-full bg-white flex justify-center py-10 ">
         <div className=" w-[430px] border shadow-lg rounded-lg">
+
           {!isOpenPage ? (
             <div
-              className="h-screen bg-white flex justify-center items-center"
-              onClick={OpenPage}
+              className="h-screen bg-white flex justify-center items-center flex-col"
+              // onClick={OpenPage}
             >
               <div className="relative inline-block">
                 <img src="../image/gift.gif" alt="" className="block" />
               </div>
+              <div>
+            <div
+              style={{
+                width: "400px",
+                height: "50px",
+                backgroundColor: "light",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: '20px', 
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width: `${loading}%`,
+                  backgroundColor: "pink",
+                  transition: "width 1s",
+                  borderRadius: '20px', 
+                }}
+              />
+            </div>
+            <div className="flex justify-center my-5">
+
+            <p className="text-pink-700 font-bold">Loading: {loading}%</p>
+            </div>
+
+          </div>
             </div>
           ) : (
             <div className="bg-white h-screen overflow-y-auto py-10">
