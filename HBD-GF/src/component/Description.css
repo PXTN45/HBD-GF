@@ -1,0 +1,15 @@
+@keyframes heartBeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5); /* ขยายให้ใหญ่ขึ้น */
+    }
+  }
+  
+  .heart-animation {
+    display: inline-block; /* ทำให้สัญลักษณ์แสดงเป็นบล็อก */
+    animation: heartBeat 0.6s infinite; /* ตั้งค่าการเคลื่อนไหว */
+    margin: 0 2px; /* ระยะห่างระหว่าง '*' */
+  }
+  
