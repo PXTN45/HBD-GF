@@ -8,10 +8,7 @@ function App() {
   const [isOpenPage, setIsOpenPage] = useState<boolean>(false);
   const [isOpenVideo, setIsOpenVideo] = useState<boolean>(false);
   const [loading, setLoading] = useState(0);
-  const [status, setStatus] = useState(false);
-  const OpenPage = () => {
-    setIsOpenPage(!isOpenPage);
-  };
+
   const OpenVideo = () => {
     setIsOpenVideo(!isOpenVideo);
   };
